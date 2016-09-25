@@ -7,32 +7,51 @@
 %supported. Specify the type and the cutoff values.
 %-------------------------------------------------------
 
-% img1 = imread('marilyncrop.jpg');10
-% img2 = imread('einstiencrop.jpg');2
-% img2 = imread('ladybugcrop.jpg');15
-% img1 = imread('applecrop.jpg');2
+% img1 = imread('withoutacnecrop.jpg');
+% img2 = imread('withacnecrop.jpg');
+% img2 = imread('ladybugcrop.jpg');
+% img1 = imread('applecrop.jpg');
 % img1 = imread('mjcrop1.jpg');10
-% img2 = imread('mjcrop2.jpg');2
+% img2 = imread('mjcrop2.jpg');2 
+img2 = imread('einstiencrop.jpg');
+img1 = imread('marilyncrop.jpg');
+
 
 %Extract low frequency features.
 lowfreq = fftfilter(img1, 10, 'lowpass');
 %Extract high frequency features.
-highfreq = fftfilter(img2, 2, 'highpass');
+highfreq = fftfilter(img2, 3, 'highpass');
 
 % %Extract band frequency features.
-% bandfreq = fftfilter(img1, [50 100], 'bandpass');
+% bandfreq = fftfilter(img2, [10 20], 'bandpass');
+% imshow(bandfreq);
+% pause();
 
-%Resize the images to be the same, Use smallest for max quality.
-outSize = min(size(img1),size(img2));
+
+%If one image is in grayscale, grayscale the other image.
+if size(lowfreq,3)==1 || size(highfreq,3)==1
+    if size(lowfreq,3)~=1
+        disp('resized low');
+        lowfreq = rgb2gray(lowfreq);
+    end
+    if size(highfreq,3)~=1
+        disp('resized high');
+        highfreq = rgb2gray(highfreq);
+    end
+end
+
+%Resize the images to be the same, Use smallest for max quality.  
+outSize = min(size(lowfreq),size(highfreq));
 lowfreq = imresize(lowfreq, [outSize(1) outSize(2)]);
 highfreq = imresize(highfreq, [outSize(1) outSize(2)]);
 
 %Add the two images together to produce the hybrid.
-hybrid = lowfreq + highfreq;
+highboost = 2;
+hybrid = lowfreq + highfreq*highboost;
 
 
 %Show the resulting hybrid image.
-imshow([lowfreq, highfreq, hybrid]);
+imshow([lowfreq, highfreq*highboost, hybrid]);
 pause();
 close all;
 

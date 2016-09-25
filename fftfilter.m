@@ -61,12 +61,23 @@ else
     disp('That crop type is unsupported');    
 end
 
+%Get the number of channels in the image
+channels = size(imageSize,2);
+
 %Use the cropping mask to zero out everything in the image
 % except which has a corresponding one in the mask.
 croppedImage = double(zeros(size(image)));
+
+%Account for grayscale and color images
 croppedImage(:,:,1) = image(:,:,1).*mask;
-croppedImage(:,:,2) = image(:,:,2).*mask;
-croppedImage(:,:,3) = image(:,:,3).*mask;
+if channels == 3
+    croppedImage(:,:,2) = image(:,:,2).*mask;
+    croppedImage(:,:,3) = image(:,:,3).*mask;
+end
+
+% imshow(croppedImage);
+% pause();
+
 end
 
 
@@ -95,12 +106,23 @@ else
     disp('That crop type is unsupported');    
 end
 
+%Get the number of channels in the image
+channels = size(imageSize,2);
+
 %Use the cropping mask to zero out everything in the image
 % except which has a corresponding one in the mask.
 croppedImage = double(zeros(size(image)));
+
+%Account for grayscale and color images
 croppedImage(:,:,1) = image(:,:,1).*mask;
-croppedImage(:,:,2) = image(:,:,2).*mask;
-croppedImage(:,:,3) = image(:,:,3).*mask;
+if channels == 3
+    croppedImage(:,:,2) = image(:,:,2).*mask;
+    croppedImage(:,:,3) = image(:,:,3).*mask;
+end
+
+% imshow(croppedImage);
+% pause();
+
 end
 
 
