@@ -7,6 +7,7 @@
 %features and cutoff frequencies can be specified.
 %-------------------------------------------------------
 function [filtered] = fftfilter(image, cutoff, filter)
+debug = false;
 image = fftshift(image);
 
 %Perform DFT on the image and shift it to center.
@@ -30,9 +31,10 @@ end
 %Convert to uint8 for proper image format.
 filtered = uint8(real(ifftshift(ifft2(ifftshift(cropped)))));
 
-
-% imshow(filtered);
-% pause();
+if debug
+    imshow(filtered);
+    pause();
+end
 
 end
 
@@ -46,6 +48,7 @@ end
 % used with DFT highpass and lowpass feature extraction
 %------------------------------------------------------
 function [croppedImage] = circlecrop(image, radius, croptype)
+debug = false;
 imageSize = size(image);
 %Create an vector that contains the circle center and radius.
 ci = [imageSize(1)/2, imageSize(2)/2, radius];
@@ -75,8 +78,10 @@ if channels == 3
     croppedImage(:,:,3) = image(:,:,3).*mask;
 end
 
-% imshow(croppedImage);
-% pause();
+if debug
+    imshow(croppedImage);
+    pause();
+end
 
 end
 
@@ -90,6 +95,7 @@ end
 % used with DFT bandpass and bandstop feature extraction
 %------------------------------------------------------
 function [croppedImage] = ringcrop(image, inner, outer, croptype)
+debug = false;
 imageSize = size(image);
 %Create an vector that contains the circle center and the inner and outer
 %circle radii
@@ -120,8 +126,10 @@ if channels == 3
     croppedImage(:,:,3) = image(:,:,3).*mask;
 end
 
-% imshow(croppedImage);
-% pause();
+if debug
+    imshow(croppedImage);
+    pause();
+end
 
 end
 

@@ -9,21 +9,22 @@
 
 % img1 = imread('withoutacnecrop.jpg');
 % img2 = imread('withacnecrop.jpg');
-% img2 = imread('ladybugcrop.jpg');
-% img1 = imread('applecrop.jpg');
+img2 = imread('ladybugcrop.jpg');
+img1 = imread('applecrop.jpg');
 % img1 = imread('mjcrop1.jpg');10
 % img2 = imread('mjcrop2.jpg');2 
-img2 = imread('einstiencrop.jpg');
-img1 = imread('marilyncrop.jpg');
+% img2 = imread('bikehybrid.png');
+% img1 = imread('bikehybrid2.png');
+% img2 = rgb2gray(img2);
 
 
 %Extract low frequency features.
-lowfreq = fftfilter(img1, 10, 'lowpass');
+lowfreq = fftfilter(img1, 20, 'lowpass');
 %Extract high frequency features.
 highfreq = fftfilter(img2, 3, 'highpass');
 
 % %Extract band frequency features.
-% bandfreq = fftfilter(img2, [10 20], 'bandpass');
+% bandfreq = fftfilter(img2, [10 30], 'bandpass');
 % imshow(bandfreq);
 % pause();
 
@@ -56,5 +57,3 @@ pause();
 close all;
 
 imwrite(hybrid, 'hybrid.jpg');
-
-
